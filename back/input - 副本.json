@@ -18,7 +18,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 2
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -28,7 +28,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 2
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -38,7 +38,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 2
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -48,7 +48,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 2
+            "supervised group": 6
         }
     ],
     "2": [
@@ -60,7 +60,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 3
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -80,7 +80,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 3
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -90,7 +90,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 3
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -100,7 +100,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 3
+            "supervised group": 6
         },
         {
             "group id": 6,
@@ -110,7 +110,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 3
+            "supervised group": 7
         }
     ],
     "3": [
@@ -122,7 +122,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 4
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -132,7 +132,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 4
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -152,7 +152,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 4
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -162,7 +162,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 4
+            "supervised group": 6
         },
         {
             "group id": 6,
@@ -172,7 +172,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 4
+            "supervised group": 7
         }
     ],
     "4": [
@@ -184,7 +184,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 5
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -194,7 +194,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 5
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -204,7 +204,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 5
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -224,7 +224,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 5
+            "supervised group": 6
         },
         {
             "group id": 6,
@@ -234,7 +234,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 5
+            "supervised group": 7
         }
     ],
     "5": [
@@ -246,7 +246,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 6
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -256,7 +256,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 6
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -266,7 +266,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 6
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -276,7 +276,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 6
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -296,7 +296,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 6
+            "supervised group": 7
         }
     ],
     "6": [
@@ -308,7 +308,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 7
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -318,7 +318,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 7
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -328,7 +328,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 7
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -338,7 +338,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 7
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -348,7 +348,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 7
+            "supervised group": 6
         },
         {
             "group id": 6,
@@ -370,7 +370,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 8
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -380,7 +380,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 8
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -390,7 +390,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 8
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -400,7 +400,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 8
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -410,7 +410,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 8
+            "supervised group": 6
         },
         {
             "group id": 6,
@@ -420,7 +420,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 8
+            "supervised group": 7
         }
     ],
     "8": [
@@ -432,7 +432,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 9
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -442,7 +442,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 9
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -452,7 +452,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 9
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -462,7 +462,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 9
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -472,7 +472,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 9
+            "supervised group": 6
         },
         {
             "group id": 6,
@@ -482,7 +482,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 9
+            "supervised group": 7
         }
     ],
     "9": [
@@ -494,7 +494,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -504,7 +504,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -514,7 +514,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -524,7 +524,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 5
         }
     ]
 }

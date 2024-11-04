@@ -7,7 +7,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 2
         },
         {
             "group id": 2,
@@ -16,7 +17,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 2
         },
         {
             "group id": 3,
@@ -25,7 +27,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 2
         },
         {
             "group id": 4,
@@ -34,7 +37,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 2
         },
         {
             "group id": 5,
@@ -43,7 +47,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 2
         }
     ],
     "2": [
@@ -54,7 +59,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 3
         },
         {
             "group id": 2,
@@ -63,7 +69,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 3
         },
         {
             "group id": 3,
@@ -72,7 +79,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 3
         },
         {
             "group id": 4,
@@ -81,7 +89,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 3
         },
         {
             "group id": 5,
@@ -90,7 +99,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 3
         },
         {
             "group id": 6,
@@ -99,7 +109,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 3
         }
     ],
     "3": [
@@ -110,7 +121,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 4
         },
         {
             "group id": 2,
@@ -119,7 +131,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 4
         },
         {
             "group id": 3,
@@ -128,7 +141,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 4
         },
         {
             "group id": 4,
@@ -137,7 +151,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 4
         },
         {
             "group id": 5,
@@ -146,7 +161,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 4
         },
         {
             "group id": 6,
@@ -155,7 +171,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 4
         }
     ],
     "4": [
@@ -166,7 +183,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 5
         },
         {
             "group id": 2,
@@ -175,7 +193,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 5
         },
         {
             "group id": 3,
@@ -184,7 +203,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 5
         },
         {
             "group id": 4,
@@ -193,7 +213,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 5
         },
         {
             "group id": 5,
@@ -202,7 +223,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 5
         },
         {
             "group id": 6,
@@ -211,7 +233,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 5
         }
     ],
     "5": [
@@ -222,7 +245,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 6
         },
         {
             "group id": 2,
@@ -231,7 +255,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 6
         },
         {
             "group id": 3,
@@ -240,7 +265,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 6
         },
         {
             "group id": 4,
@@ -249,7 +275,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 6
         },
         {
             "group id": 5,
@@ -258,7 +285,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 6
         },
         {
             "group id": 6,
@@ -267,7 +295,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 6
         }
     ],
     "6": [
@@ -278,7 +307,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 7
         },
         {
             "group id": 2,
@@ -287,7 +317,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 7
         },
         {
             "group id": 3,
@@ -296,7 +327,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 7
         },
         {
             "group id": 4,
@@ -305,7 +337,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 7
         },
         {
             "group id": 5,
@@ -314,7 +347,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 7
         },
         {
             "group id": 6,
@@ -323,7 +357,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 7
         }
     ],
     "7": [
@@ -334,7 +369,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 8
         },
         {
             "group id": 2,
@@ -343,7 +379,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 8
         },
         {
             "group id": 3,
@@ -352,7 +389,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 8
         },
         {
             "group id": 4,
@@ -361,7 +399,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 8
         },
         {
             "group id": 5,
@@ -370,7 +409,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 8
         },
         {
             "group id": 6,
@@ -379,7 +419,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 8
         }
     ],
     "8": [
@@ -390,7 +431,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 9
         },
         {
             "group id": 2,
@@ -399,7 +441,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 9
         },
         {
             "group id": 3,
@@ -408,7 +451,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 9
         },
         {
             "group id": 4,
@@ -417,7 +461,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 9
         },
         {
             "group id": 5,
@@ -426,7 +471,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 9
         },
         {
             "group id": 6,
@@ -435,7 +481,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 9
         }
     ],
     "9": [
@@ -446,7 +493,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 1
         },
         {
             "group id": 2,
@@ -455,7 +503,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 1
         },
         {
             "group id": 3,
@@ -464,7 +513,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 1
         },
         {
             "group id": 4,
@@ -473,7 +523,8 @@
             "shoot": true,
             "program": true,
             "absent": false,
-            "absent times": 0
+            "absent times": 0,
+            "supervised group": 1
         }
     ]
 }

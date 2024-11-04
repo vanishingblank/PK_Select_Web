@@ -8,6 +8,11 @@ import os
 
 global_filename=''
 global_backup_path='./backupFile'
+# global global_pkResult_name
+# global_process_file
+# global global_pkResult
+global_pkResult_path=os.getcwd()
+
 
 
 
@@ -79,6 +84,14 @@ def api_endpoint():
      json.dump(filtered_group, f, ensure_ascii=False, indent=4) '''
     
     filtered_group={}
+    totalGroupNums=0
+    supervisedG=0
+    for group in sheet_json_name_group:
+        if not re.match(r"第\d+组", group["组号"]):  
+            continue
+        group_id = (group['组号'].replace('第', '').replace('组', ''))
+        totalGroupNums=int(group_id)
+    print(totalGroupNums)
     # 遍历每个组  
     for group in sheet_json_name_group:  
         '''if "分组原则" in group["组号"] or "样例" in group["组号"] or "请所有同学按照以下分组原则" in group["组号"]:  
@@ -91,8 +104,12 @@ def api_endpoint():
         if group_id not in filtered_group:  
                 filtered_group[group_id] = []    
                 #filtered_group[group_id] = []  
-        #groupMemberInfo=[]  
+        #groupMemberInfo=[]
+        #print(int(group_id))
         mark=1
+        supervisedG=(int(group_id))%totalGroupNums+1
+ 
+
         for i,(key,value) in enumerate(group.items(), start=1): 
             if key.startswith('组号'):  
                 continue
@@ -118,28 +135,29 @@ def api_endpoint():
                     "shoot": True,  
                     "program": True,  
                     "absent": False,
-                    "absent times":0
+                    "absent times":0,
+                    "supervised group":supervisedG
                     })
-                mark=mark+1
+                mark=mark+1          
                           
-        '''for i, member in enumerate(members, start=1.0):  
-            name, info = member.split('（')  
-            #sex_dorm = info.rstrip('）').split('-')  
-            #student_sequence = int(sex_dorm[0])  
-            student_id = 20235850#generate_student_id(202458501, student_sequence)  # 假设的student_id生成逻辑  
-          
-             # 添加到输出JSON中  
-            if group_id not in  filtered_group:  
-                filtered_group[f"{group_id:.1f}"] = []  
-          
-            filtered_group[f"{group_id:.1f}"].append({  
-                "group id": i,  
-                "name": name,  
-                "student id": student_id,  
-                "shoot": True,  
-                "program": True,  
-                "absent": False  
-             })  '''
+    '''for i, member in enumerate(members, start=1.0):  
+        name, info = member.split('（')  
+        #sex_dorm = info.rstrip('）').split('-')  
+        #student_sequence = int(sex_dorm[0])  
+        student_id = 20235850#generate_student_id(202458501, student_sequence)  # 假设的student_id生成逻辑  
+        
+            # 添加到输出JSON中  
+        if group_id not in  filtered_group:  
+            filtered_group[f"{group_id:.1f}"] = []  
+        
+        filtered_group[f"{group_id:.1f}"].append({  
+            "group id": i,  
+            "name": name,  
+            "student id": student_id,  
+            "shoot": True,  
+            "program": True,  
+            "absent": False  
+            })  '''
     filename_without_extension, extension = os.path.splitext(filenameAC) 
 ##################################################
 # 设置全局变量方便使用
@@ -147,9 +165,10 @@ def api_endpoint():
     global_filename= filename_without_extension+'.json'
 ##################################################
     global global_process_file
-    global_process_file=filtered_group
+    global_process_file=filtered_group #设置临时文件对象
+
     #存储信息的全局变量
-    with open(f"{filename_without_extension}.json", 'w', encoding='utf-8') as f:  
+    with open(f"{filename_without_extension}.json", 'w', encoding='utf-8') as f:
         json.dump(filtered_group, f, ensure_ascii=False, indent=4)
     with open(f"{filename_without_extension}_backup.json", 'w', encoding='utf-8') as f:  
         json.dump(filtered_group, f, ensure_ascii=False, indent=4) 
@@ -203,7 +222,8 @@ def mark_absent(data, names_to_mark):
                         # 确保 'absent times' 是一个整数，并增加1  
                         if 'absent times' not in student:  
                             student['absent times'] = 0  
-                        student['absent times'] += 1  
+                        student['absent times'] += 1
+                        print(f"'{name}'缺席已标记")  
                         # 由于已经找到了学生并进行了修改，跳出内层循环 
                         break  # 跳出
             # 由于已经找到了学生并进行了修改，跳出外层循环 
@@ -276,6 +296,8 @@ def select_programmers(data):
 def write_results_to_file(selected_students, selected_photographers, pk_num, class_number):
     current_date = datetime.now().strftime("%Y-%m-%d")
     filename = f"{class_number}第{pk_num}次PK{current_date}.txt"
+    global global_pkResult_name
+    global_pkResult_name=filename
 
     with open(filename, 'w', encoding='utf-8') as f:
         f.write("测试要求\n")
@@ -293,7 +315,9 @@ def write_results_to_file(selected_students, selected_photographers, pk_num, cla
         for group_index, photographer in selected_photographers:
             f.write(
                 f"第{group_index}组\t\t{photographer['name']}\t\t{photographer['student id']}\t\t{photographer['supervised group']}\n")
-
+        global global_pkResult_path
+        global_pkResult_path= os.path.join(os.getcwd(), filename)
+        
     print(f"结果已保存到 {filename}")
 
 def select_photographers(data, selected_programmers):
@@ -361,15 +385,22 @@ def load_class():
     if not filename:
         return jsonify({"error": "没有加载到有效文件"}), 400
     data = load_data(filename)
+
     global global_filename
     global_filename=filename
+    '''global global_process_file
+    global_process_file=data'''
+    '''with open(global_filename,'r',encoding='utf-8') as f:
+        global global_process_file
+        global_process_file=f
+        pass'''
     if not data:
         return jsonify({"error": "没有加载到有效的数据"}), 400
     return jsonify({"message": "班级数据加载成功", "data": data})
 
 @app.route('/mark_absent', methods=['POST'])
 def mark_absent_students():
-    data=global_process_file
+    data=load_data(global_filename)#global_process_file
     print('processing:'+global_filename)
     #with open(global_filename,'w') as data:
     names_to_mark = request.get_json().get('names')
@@ -380,15 +411,26 @@ def mark_absent_students():
         #json.dump(data,data, ensure_ascii=False, indent=4)
         # 将处理后的数据保存为新的 JSON 文件  
     save_data(global_filename, data)  # 假设数据保存到 data.json
+    '''data=load_data(global_filename)
+    print('processing: '+global_filename)
+    #with open(global_filename,'w') as data:
+    names_to_mark = request.get_json().get('names')
+    if not data:
+        return jsonify({"error": "无效的输入数据"}), 400
+
+    mark_absent(data, names_to_mark)
+    # 将处理后的数据保存为新的 JSON 文件  
+    save_data(global_filename, data)  # 假设数据保存到 data.json'''
     return jsonify({"message": "缺席学生已标记"})
     
 @app.route('/generate_pk', methods=['POST'])
 def generate_pk():
     class_number = request.json.get('class_number')
     pk_num = request.json.get('pk_num')
+    #print(class_number+'  '+pk_num)
     filename = global_filename#request.json.get('filename')
-
-    data = global_process_file
+    data=load_data(global_filename)#global_process_file
+    #data =load_data(filename)
     if not data:
         return jsonify({"error": "没有加载到有效的数据"}),
     backup_data(filename, data, pk_num, class_number)
@@ -397,8 +439,8 @@ def generate_pk():
 
     save_data(filename, data)
 
-    names_to_mark = request.json.get('names_to_mark', [])
-    mark_absent(data, names_to_mark)
+    #names_to_mark = request.json.get('names_to_mark', [])
+    #mark_absent(data, names_to_mark)
     save_data(filename, data)
     for group in data.values():
         for student in group:
@@ -409,13 +451,25 @@ def generate_pk():
     # 保存更新后的数据
     save_data(filename, data)
 
-    write_results_to_file(selected_students, selected_photographers, pk_num, class_number)
+    write_results_to_file(selected_students, selected_photographers, pk_num, class_number) #生成结果以及发送给前端 
+    
     return jsonify({"message": "小组 PK 生成完成"})
 
+@app.route('/download_pkResult',methods=['GET'])
+def downloadPkResult():
+     # 处理 GET 请求以下载文件  
+    file_path =global_pkResult_path
+    if os.path.isfile(file_path):  
+        return send_from_directory(global_pkResult_path, global_pkResult_name, as_attachment=True)  
+    else:  
+        return jsonify({"error": "文件未找到"}), 404 
+   # return send_from_directory(global_pkResult_path,global_pkResult_name, as_attachment=True)  
+    
+    #return send_from_directory(global_pkResult, filename, as_attachment=True) #让前端下载pk结果
 
 @app.route('/reset_students', methods=['POST'])
 def reset_students():
-    filename = request.json.get('filename')
+    filename =global_filename
     data = load_data(filename)
 
     if not data:
@@ -433,12 +487,13 @@ def reset_students():
 @app.route('/query_student_status', methods=['POST'])
 def query_student_status_route():
     group_number = request.json.get('group_number')
-    data = load_data('data.json')  # 假设数据保存到 data.json
-    group_key = f"{group_number}.0"
-    if group_key not in data:
-        return jsonify({"error": f"警告: 组 {group_number} 不存在。"}), 400
+    data = load_data(global_filename)  
+    group_key =str(group_number)
+    print(group_key)
+    #if group_key not in data:
+        #return jsonify({"error": f"警告: 组 {group_number} 不存在。"}), 400
 
-    students = data[group_key]
+    students=data[group_key]
     status_list = []
     for student in students:
         name = student['name']
@@ -451,7 +506,7 @@ def query_student_status_route():
             "shoot_status": shoot_status,
             "absent_times": absent_times
         })
-
+    print(status_list)
     return jsonify(status_list)
 
 

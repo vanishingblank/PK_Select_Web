@@ -494,7 +494,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 10
         },
         {
             "group id": 2,
@@ -504,7 +504,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 10
         },
         {
             "group id": 3,
@@ -514,7 +514,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 10
         },
         {
             "group id": 4,
@@ -524,7 +524,7 @@
             "program": true,
             "absent": false,
             "absent times": 0,
-            "supervised group": 1
+            "supervised group": 10
         }
     ]
 }
