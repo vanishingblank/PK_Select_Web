@@ -51,6 +51,21 @@ const ExcelToJson = (e) => {
 
 
 }
+const uploadJson=(e)=>{
+  axios.post('http://127.0.0.1:5000/api/endpoint', )
+      .then(response => {
+        //在文件发送成功之后才让子组件的检测文件功能启用
+        if(classManagerRef.value && classManagerRef.value.fetchFiles)
+        {
+          classManagerRef.value.fetchFiles(); 
+        }
+        console.log("成功:", response.data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      })
+
+}
   
 
 
@@ -58,9 +73,10 @@ const ExcelToJson = (e) => {
 </script>
 
 <template>
-  <h1>请上传学生分组信息的Excel表格</h1>
-  <h3>（上传文件以载入学生数据）</h3>
+  <h1>首次使用,请上传学生分组信息的Excel表格</h1>
   <input ref="uploadInput" type="file" class="excelBox" @change="ExcelToJson" />
+  <h1>*已使用,请上传上次生成的学生信息.json文件</h1>
+  <input ref="uploadInput" type="file" class="excelBox" @change="" />
   <br>
   <classManager ref="classManagerRef"></classManager>
 </template>
