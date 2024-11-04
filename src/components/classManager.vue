@@ -155,6 +155,8 @@ import axios from 'axios';
 
 </script>
 <template>
+    <h2>或者读取本地学生信息</h2>
+    <button ref="run"  class="excelBox" @click="fetchFiles">读取本地</button>
     <h1>班级管理系统</h1>
     <div>
         <h2>加载班级数据</h2>
@@ -189,7 +191,7 @@ import axios from 'axios';
     <div ref="resultContainer"></div> <!--显示学生状态-->
 
     <div>
-        <h2>重置学生状态</h2>
+        <h2>*调试*重置学生状态</h2>
         <input type="text" id="reset-filename" placeholder="输入班级文件名 (如 data.json)">
         <button @click="resetStudents">重置状态</button>
     </div>
