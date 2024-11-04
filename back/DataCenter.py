@@ -228,7 +228,8 @@ def mark_absent(data, names_to_mark):
                         break  # 跳出
             # 由于已经找到了学生并进行了修改，跳出外层循环 
         else:  
-            print(f"警告: 名字 '{name}' 不在学生名单中。")  
+            print(f"警告: 名字 '{name}' 不在学生名单中。")
+              
             
 '''def mark_absent(data, names_to_mark):
     valid_names = {student['name'] for group in data.values() for student in group}
@@ -410,7 +411,10 @@ def mark_absent_students():
     mark_absent(data, names_to_mark)
         #json.dump(data,data, ensure_ascii=False, indent=4)
         # 将处理后的数据保存为新的 JSON 文件  
-    save_data(global_filename, data)  # 假设数据保存到 data.json
+    #save_data(global_filename, data)
+    with open(global_filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    data=load_data(global_filename)
     '''data=load_data(global_filename)
     print('processing: '+global_filename)
     #with open(global_filename,'w') as data:
@@ -437,11 +441,11 @@ def generate_pk():
 
     update_students(data)
 
-    save_data(filename, data)
-
     #names_to_mark = request.json.get('names_to_mark', [])
     #mark_absent(data, names_to_mark)
-    save_data(filename, data)
+    #save_data(filename, data)
+    with open(global_filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
     for group in data.values():
         for student in group:
             student['absent'] = False
@@ -449,10 +453,12 @@ def generate_pk():
     selected_photographers = select_photographers(data, selected_students)
 
     # 保存更新后的数据
-    save_data(filename, data)
+    #save_data(filename, data)
+    with open(global_filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
     write_results_to_file(selected_students, selected_photographers, pk_num, class_number) #生成结果以及发送给前端 
-    
+    data=load_data(global_filename)
     return jsonify({"message": "小组 PK 生成完成"})
 
 @app.route('/download_pkResult',methods=['GET'])
@@ -490,8 +496,8 @@ def query_student_status_route():
     data = load_data(global_filename)  
     group_key =str(group_number)
     print(group_key)
-    #if group_key not in data:
-        #return jsonify({"error": f"警告: 组 {group_number} 不存在。"}), 400
+    if group_key not in data:
+        return jsonify({"error": f"警告: 组 {group_number} 不存在。"}), 400
 
     students=data[group_key]
     status_list = []
@@ -499,7 +505,7 @@ def query_student_status_route():
         name = student['name']
         program_status = "可以比赛" if student['program'] else "不可比赛"
         shoot_status = "可以监督" if student['shoot'] else "不可监督"
-        absent_times = student.get('absent times', 0)
+        absent_times = student['absent times']#.get('absent times', 0)
         status_list.append({
             "name": name,
             "program_status": program_status,

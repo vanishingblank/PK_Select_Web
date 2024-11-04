@@ -4,7 +4,7 @@
             "group id": 1,
             "name": "察蒙璐",
             "student id": "202458501145",
-            "shoot": false,
+            "shoot": true,
             "program": false,
             "absent": false,
             "absent times": 0,
@@ -14,8 +14,8 @@
             "group id": 2,
             "name": "王敬源",
             "student id": "202458501128",
-            "shoot": true,
-            "program": false,
+            "shoot": false,
+            "program": true,
             "absent": false,
             "absent times": 0,
             "supervised group": 2
@@ -120,8 +120,8 @@
             "student id": "202458501118",
             "shoot": true,
             "program": false,
-            "absent": false,
-            "absent times": 0,
+            "absent": true,
+            "absent times": 2,
             "supervised group": 4
         },
         {
@@ -192,8 +192,8 @@
             "student id": "202458501102",
             "shoot": false,
             "program": true,
-            "absent": false,
-            "absent times": 0,
+            "absent": true,
+            "absent times": 6,
             "supervised group": 5
         },
         {
@@ -490,7 +490,7 @@
             "group id": 1,
             "name": "欧阳振",
             "student id": "202369505316",
-            "shoot": false,
+            "shoot": true,
             "program": false,
             "absent": false,
             "absent times": 0,
@@ -501,7 +501,7 @@
             "name": "张嘉乐",
             "student id": "202359501220",
             "shoot": false,
-            "program": false,
+            "program": true,
             "absent": false,
             "absent times": 0,
             "supervised group": 1
@@ -511,7 +511,7 @@
             "name": "汲开元",
             "student id": "202359502236",
             "shoot": true,
-            "program": false,
+            "program": true,
             "absent": false,
             "absent times": 0,
             "supervised group": 1
@@ -520,7 +520,7 @@
             "group id": 4,
             "name": "王延继",
             "student id": "202356503211",
-            "shoot": false,
+            "shoot": true,
             "program": true,
             "absent": false,
             "absent times": 0,
