@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint,request,jsonify,redirect, url_for, render_template, flash, send_from_directory  
+from flask import Flask, Blueprint,request,jsonify,Response,redirect, url_for, render_template, flash, send_from_directory  
 from flask_cors import CORS
 import json
 import re
@@ -8,7 +8,7 @@ import os
 
 global_filename=''
 global_backup_path='./backupFile'
-# global global_pkResult_name
+global_pkResult_name=''
 # global_process_file
 # global global_pkResult
 global_pkResult_path=os.getcwd()
@@ -24,15 +24,16 @@ global_pkResult_path=os.getcwd()
 
 app=Flask(__name__)
 
-CORS(app, origins=['http://localhost:5173'])  #指定前端地址以允许数据传递
+CORS(app, origins=['http://192.168.1.235:5173'])  #指定前端地址以允许数据传递
 
+#CORS(app, resources=r'/*') 
 
 #########################
 # 接收并处理文件
 # 接收文件的变量filenameAC
 #########################
 
-@app.route('/api/endpoint',methods=['POST'])
+@app.route('/app/endpoint',methods=['POST'])
 def api_endpoint():
     
     combined_data = request.json  
@@ -296,7 +297,11 @@ def select_programmers(data):
 
 def write_results_to_file(selected_students, selected_photographers, pk_num, class_number):
     current_date = datetime.now().strftime("%Y-%m-%d")
+    ''' if not class_number:
+        filename=''
+    else:'''
     filename = f"{class_number}第{pk_num}次PK{current_date}.txt"
+    
     global global_pkResult_name
     global_pkResult_name=filename
 
@@ -429,50 +434,64 @@ def mark_absent_students():
     
 @app.route('/generate_pk', methods=['POST'])
 def generate_pk():
-    class_number = request.json.get('class_number')
-    pk_num = request.json.get('pk_num')
-    #print(class_number+'  '+pk_num)
-    filename = global_filename#request.json.get('filename')
-    data=load_data(global_filename)#global_process_file
-    #data =load_data(filename)
-    if not data:
-        return jsonify({"error": "没有加载到有效的数据"}),
-    backup_data(filename, data, pk_num, class_number)
+    try:
 
-    update_students(data)
+        class_number = request.json.get('class_number')
+        pk_num = request.json.get('pk_num')
+        if not class_number:
+            class_number=''
+        #print(class_number+'  '+pk_num)
+        filename = global_filename#request.json.get('filename')
+        data=load_data(global_filename)#global_process_file
+        #data =load_data(filename)
+        if not data:
+            return jsonify({"error": "没有加载到有效的数据"}),
+        backup_data(filename, data, pk_num, class_number)
 
-    #names_to_mark = request.json.get('names_to_mark', [])
-    #mark_absent(data, names_to_mark)
-    #save_data(filename, data)
-    with open(global_filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-    for group in data.values():
-        for student in group:
-            student['absent'] = False
-    selected_students = select_programmers(data)
-    selected_photographers = select_photographers(data, selected_students)
+        update_students(data)
 
-    # 保存更新后的数据
-    #save_data(filename, data)
-    with open(global_filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+        #names_to_mark = request.json.get('names_to_mark', [])
+        #mark_absent(data, names_to_mark)
+        #save_data(filename, data)
+        with open(global_filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        for group in data.values():
+            for student in group:
+                student['absent'] = False
+        selected_students = select_programmers(data)
+        selected_photographers = select_photographers(data, selected_students)
 
-    write_results_to_file(selected_students, selected_photographers, pk_num, class_number) #生成结果以及发送给前端 
-    data=load_data(global_filename)
-    return jsonify({"message": "小组 PK 生成完成"})
+        # 保存更新后的数据
+        #save_data(filename, data)
+        with open(global_filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
 
-@app.route('/download_pkResult',methods=['GET'])
+        write_results_to_file(selected_students, selected_photographers, pk_num, class_number) #生成结果以及发送给前端 
+        data=load_data(global_filename)
+        print(global_pkResult_name)
+        return jsonify({"message": "小组 PK 生成完成","filename":f"{global_pkResult_name}"})
+    except Exception as e:  
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/download_pkResult',methods=['GET']) #unused
 def downloadPkResult():
+    with open(global_pkResult_name,'rb')as f:
+        data=f.read()
+        return Response(data,mimetype='text/plain')
      # 处理 GET 请求以下载文件  
-    file_path =global_pkResult_path
+    ''' file_path =global_pkResult_path
     if os.path.isfile(file_path):  
         return send_from_directory(global_pkResult_path, global_pkResult_name, as_attachment=True)  
     else:  
-        return jsonify({"error": "文件未找到"}), 404 
+        return jsonify({"error": "文件未找到"}), 404 '''
    # return send_from_directory(global_pkResult_path,global_pkResult_name, as_attachment=True)  
     
     #return send_from_directory(global_pkResult, filename, as_attachment=True) #让前端下载pk结果
 
+
+#########################
+# 班级管理：重置学生状态
+#########################
 @app.route('/reset_students', methods=['POST'])
 def reset_students():
     filename =global_filename
@@ -490,6 +509,9 @@ def reset_students():
     return jsonify({"message": "所有学生的 shoot 和 program 值已重置为 True"})
 
 
+#########################
+# 班级管理：查询学生状态
+#########################
 @app.route('/query_student_status', methods=['POST'])
 def query_student_status_route():
     group_number = request.json.get('group_number')
@@ -515,16 +537,16 @@ def query_student_status_route():
     print(status_list)
     return jsonify(status_list)
 
+@app.route('/addNewGuys',methods=['POST'])
+def addNewStd():
+    return 
 
 
 
-#########################
-# 班级管理：查询学生状态
-#########################
 
-#########################
-# 班级管理：重置学生状态
-#########################
+
+
     
 if __name__=='__main__':
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0',port=5000)
