@@ -35,7 +35,7 @@ const ExcelToJson = (e) => {
     }
 
     //使用ajax来等文件处理之后通过axios发送给flask
-    axios.post('http://127.0.0.1:5000/api/endpoint', sheetJson)
+    axios.post('http://192.168.1.235:5000/app/endpoint', sheetJson)
       .then(response => {
         //在文件发送成功之后才让子组件的检测文件功能启用
         if(classManagerRef.value && classManagerRef.value.fetchFiles)
