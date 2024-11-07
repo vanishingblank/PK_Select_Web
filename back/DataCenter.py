@@ -537,11 +537,18 @@ def query_student_status_route():
     print(status_list)
     return jsonify(status_list)
 
+
+#########################
+# 班级管理：添加学生
+#########################
 @app.route('/addNewGuys',methods=['POST'])
 def addNewStd():
+    GetData=request.get_json()
+    nameToAdd=GetData.get('name')
+    addToGroup=GetData.get('toGroup')
+    
+    #添加学生
     return 
-
-
 
 
 
