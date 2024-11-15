@@ -26,7 +26,8 @@ global_totalGroupNums=0
 
 app=Flask(__name__)
 
-CORS(app, origins=['http://localhost:5173'])  #指定前端地址以允许数据传递
+CORS(app, origins=['http://class'])  #指定前端地址以允许数据传递
+CORS(app, origins=['http://192.168.1.238'])
 
 #CORS(app, resources=r'/*') 
 
@@ -590,8 +591,8 @@ def addNewStd():
             tmpGroupid=-1
             #print(value)
             for tmpS in value:
-                print(tmpS)
-                print(tmpS["group id"])
+                #print(tmpS)
+                #print(tmpS["group id"])
                 tmpGroupNum=int(tmpS["group id"])+1
 
             #data[key].append(newStd)
@@ -619,5 +620,5 @@ def addNewStd():
 
     
 if __name__=='__main__':
-    app.run(debug=True)
-    #app.run(debug=True,host='0.0.0.0',port=5000)
+    #app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0',port=5000)
