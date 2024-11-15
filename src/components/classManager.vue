@@ -4,6 +4,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      //ip:'http://192.168.1.238:5000',
       files: [],
       selectedFile: '',//要加载的班级名称
       filename: '',  //发送到后端的文件名变量
@@ -30,6 +31,7 @@ export default {
 
       addedStdName: '',  //新加学生
       addedToGroupNum: '',  //分配到的组别
+      addedStdID: '',//新生学号
 
 
     };
@@ -37,7 +39,7 @@ export default {
   methods: {
     fetchFiles() {
 
-      axios.get('http://192.168.1.235:5000/find_files')
+      axios.get('http://127.0.0.1:5000/find_files')
         .then(response => {
           this.files = response.data;
         })
@@ -51,7 +53,7 @@ export default {
       if (this.selectedFile === '')
         alert('请欲选择处理的文件')
       else {
-        axios.post('http://192.168.1.235:5000/load_class', { filename: this.selectedFile })
+        axios.post('http://127.0.0.1:5000/load_class', { filename: this.selectedFile })
           .then(response => {
             alert(response.data.message);
           })
@@ -63,7 +65,7 @@ export default {
     markAbsent() {
       const names = this.absentNames.split('，').map(name => name.trim());
       console.log(names)
-      axios.post('http://192.168.1.235:5000/mark_absent', {   //原本是127.0.0.1：5000，现在更改成控制台显示的与前端的相同
+      axios.post('http://127.0.0.1:5000/mark_absent', {   //原本是127.0.0.1：5000，现在更改成控制台显示的与前端的相同
         names: names
       }, {
         headers: {
@@ -86,7 +88,7 @@ export default {
       if (this.pkNum === '' && this.selectedFile === '')
         alert("请输入有效的PK次数")
       else {
-        axios.post('http://192.168.1.235:5000/generate_pk', {
+        axios.post('http://127.0.0.1:5000/generate_pk', {
           pk_num: this.pkNum,
           class_number: this.classNumber,
           filename: this.filename,
@@ -116,7 +118,7 @@ export default {
 
     },
     downloadFile() {
-      axios.get('http://192.168.1.235:5000/download_pkResult')
+      axios.get('http://127.0.0.1:5000/download_pkResult')
         .then(Response => {
           const blob = new Blob([Response.data], { type: 'text/plain' });
           this.resultTxtHref = URL.createObjectURL(blob);
@@ -153,7 +155,7 @@ export default {
      }  
    },*/
     resetStudents() {
-      axios.post('http://192.168.1.235:5000/reset_students', { filename: this.resetFilename }, {
+      axios.post('http://127.0.0.1:5000/reset_students', { filename: this.resetFilename }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -166,7 +168,7 @@ export default {
         });
     },
     queryStatus() {
-      axios.post('http://192.168.1.235:5000/query_student_status', { group_number: this.groupNumber }, {
+      axios.post('http://127.0.0.1:5000/query_student_status', { group_number: this.groupNumber }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -184,18 +186,24 @@ export default {
         });
     },
     addStudent() {
-      axios.post('http://192.168.1.235:5000/addNewGuys', { name: this.addedStdName, toGroup: this.addedToGroupNum }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => {
-          alert('学生 ' + this.addedStdName + ' 已添加至第 ' + this.addedToGroupNum + ' 组')
-
+      if (this.addedStdName === '' && this.addedStdID === ''&&this.addedToGroupNum==='')
+        alert("请输入有效学生信息")
+      else {
+        axios.post('http://127.0.0.1:5000/addNewGuys', { name: this.addedStdName, toGroup: this.addedToGroupNum, stdID: this.addedStdID }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
-        .catch(error => {
-          alert(error.response.data.error)
-        });
+          .then(response => {
+            alert('学生 ' + this.addedStdName + ' 已添加至第 ' + this.addedToGroupNum + ' 组')
+            console.log(response.data)
+
+          })
+          .catch(error => {
+            alert(error.response.data.error)
+          });
+      }
+
     }
   },
   mounted() {
@@ -256,7 +264,8 @@ export default {
     <div>
       <h2>添加学生</h2>
       <input type="text" id="add-names" v-model="addedStdName" placeholder="输入要添加的学生">
-      <input type="text" id="addToGroups" v-model="addedToGroupNum" placeholder="添加到组别">
+      <input type="number" id="addToGroups" v-model="addedStdID" placeholder="学生学号">
+      <input type="number" id="addToGroups" v-model="addedToGroupNum" placeholder="添加到组别">
       <button @click="addStudent">添加</button>
     </div>
     <br>

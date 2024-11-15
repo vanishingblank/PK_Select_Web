@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import * as XLSX from 'xlsx'
 import classManager from './components/classManager.vue';
-
+//const ip='http://192.168.1.238:5000'
 const uploadInput = ref(null)
 const classManagerRef = ref(null)
 const ExcelToJson = (e) => {
@@ -19,11 +19,16 @@ const ExcelToJson = (e) => {
       type: 'binary',
     })
 
-    const wsname = workbook.SheetNames[0];
+    /* 读取特定的表*/
+    const wsname = workbook.SheetNames.find(name => name === '分组');
+    const stdID= workbook.SheetNames.find(name => name === '班级名单');
+    
+    
+    /*const wsname = workbook.SheetNames[0];
     //分组状况
 
     const stdID = workbook.SheetNames[3];
-    //学号sheet,如表格变动可能要手动调整
+    //学号sheet,如表格变动可能要手动调整*/
 
     const sheetJsonNameGroup = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
     const sheetJsonNameID = XLSX.utils.sheet_to_json(workbook.Sheets[stdID]);
@@ -35,7 +40,7 @@ const ExcelToJson = (e) => {
     }
 
     //使用ajax来等文件处理之后通过axios发送给flask
-    axios.post('http://192.168.1.235:5000/app/endpoint', sheetJson)
+    axios.post('http://127.0.0.1:5000/app/endpoint', sheetJson)
       .then(response => {
         //在文件发送成功之后才让子组件的检测文件功能启用
         if (classManagerRef.value && classManagerRef.value.fetchFiles) {
