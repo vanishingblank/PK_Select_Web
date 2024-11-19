@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import * as XLSX from 'xlsx'
 import classManager from './components/classManager.vue';
-//const ip='http://192.168.1.238:5000'
+const ip='http://192.168.1.239:5000'
 const uploadInput = ref(null)
 const classManagerRef = ref(null)
 const ExcelToJson = (e) => {
@@ -40,7 +40,7 @@ const ExcelToJson = (e) => {
     }
 
     //使用ajax来等文件处理之后通过axios发送给flask
-    axios.post('http://127.0.0.1:5000/app/endpoint', sheetJson)
+    axios.post(`${ip}/app/endpoint`, sheetJson)
       .then(response => {
         //在文件发送成功之后才让子组件的检测文件功能启用
         if (classManagerRef.value && classManagerRef.value.fetchFiles) {

@@ -33,13 +33,14 @@ export default {
       addedToGroupNum: '',  //分配到的组别
       addedStdID: '',//新生学号
 
+      ip:'http://192.168.1.239:5000'
 
     };
   },
   methods: {
     fetchFiles() {
 
-      axios.get('http://127.0.0.1:5000/find_files')
+      axios.get(`${this.ip}/find_files`)
         .then(response => {
           this.files = response.data;
         })
@@ -53,7 +54,7 @@ export default {
       if (this.selectedFile === '')
         alert('请欲选择处理的文件')
       else {
-        axios.post('http://127.0.0.1:5000/load_class', { filename: this.selectedFile })
+        axios.post(`${this.ip}/load_class`, { filename: this.selectedFile })
           .then(response => {
             alert(response.data.message);
           })
@@ -65,7 +66,7 @@ export default {
     markAbsent() {
       const names = this.absentNames.split('，').map(name => name.trim());
       console.log(names)
-      axios.post('http://127.0.0.1:5000/mark_absent', {   //原本是127.0.0.1：5000，现在更改成控制台显示的与前端的相同
+      axios.post(`${this.ip}/mark_absent`, {   //原本是127.0.0.1：5000，现在更改成控制台显示的与前端的相同
         names: names
       }, {
         headers: {
@@ -88,7 +89,7 @@ export default {
       if (this.pkNum === '' && this.selectedFile === '')
         alert("请输入有效的PK次数")
       else {
-        axios.post('http://127.0.0.1:5000/generate_pk', {
+        axios.post(`${this.ip}/generate_pk`, {
           pk_num: this.pkNum,
           class_number: this.classNumber,
           filename: this.filename,
@@ -118,7 +119,7 @@ export default {
 
     },
     downloadFile() {
-      axios.get('http://127.0.0.1:5000/download_pkResult')
+      axios.get(`${this.ip}/download_pkResult`)
         .then(Response => {
           const blob = new Blob([Response.data], { type: 'text/plain' });
           this.resultTxtHref = URL.createObjectURL(blob);
@@ -155,7 +156,7 @@ export default {
      }  
    },*/
     resetStudents() {
-      axios.post('http://127.0.0.1:5000/reset_students', { filename: this.resetFilename }, {
+      axios.post(`${this.ip}/reset_students`, { filename: this.resetFilename }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -168,7 +169,7 @@ export default {
         });
     },
     queryStatus() {
-      axios.post('http://127.0.0.1:5000/query_student_status', { group_number: this.groupNumber }, {
+      axios.post(`${this.ip}/query_student_status`, { group_number: this.groupNumber }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -189,7 +190,7 @@ export default {
       if (this.addedStdName === '' && this.addedStdID === ''&&this.addedToGroupNum==='')
         alert("请输入有效学生信息")
       else {
-        axios.post('http://127.0.0.1:5000/addNewGuys', { name: this.addedStdName, toGroup: this.addedToGroupNum, stdID: this.addedStdID }, {
+        axios.post(`${this.ip}/addNewGuys`, { name: this.addedStdName, toGroup: this.addedToGroupNum, stdID: this.addedStdID }, {
           headers: {
             'Content-Type': 'application/json'
           }
