@@ -9,11 +9,11 @@ export default defineConfig({
     vue(),
   ],
   server: {  
-    host:'192.168.1.235',
+    //host:'192.168.1.239',
     port:5173,
-    /*proxy:{
-      'http':{
-        target:'http://127.0.0.1:5000',
+   /* proxy:{
+      'app':{
+        target:'http://192.168.1.235:5000',
         changeOrigin:true,
         rewrite:(path)=>path //不重写地址，保持原样
       }
