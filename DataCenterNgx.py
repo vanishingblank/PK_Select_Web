@@ -26,11 +26,11 @@ global_totalGroupNums=0
 
 app=Flask(__name__)
 
-CORS(app, origins=['http://class:8002'])  #指定前端地址以允许数据传递
-CORS(app, origins=['http://192.168.1.239'])
-CORS(app,origins=['http://localhost:5173'])
-CORS(app, origins=['http://192.168.1.239:8002'])#wyz ip
-
+# CORS(app, origins=['http://class:8002'])  #指定前端地址以允许数据传递
+# CORS(app, origins=['http://192.168.1.179:5173'])
+# CORS(app,origins=['http://localhost:5173'])
+# CORS(app, origins=['http://192.168.1.239:8002'])#wyz ip
+CORS(app)
 
 #CORS(app, resources=r'/*') 
 
@@ -381,7 +381,7 @@ def backup_data(filename, data, pk_num, class_number):
         print(f"备份文件保存失败: {e}")
 
 
-@app.route('/find_files',methods=['GET'])
+@app.route('/api/find_files',methods=['GET'])
 def find_files():
     json_files =[f for f in os.listdir() if f.endswith('.json')]
     if not json_files:
@@ -391,7 +391,7 @@ def find_files():
         return jsonify(json_files)
 
 
-@app.route('/load_class', methods=['POST'])
+@app.route('/api/load_class', methods=['POST'])
 def load_class():
     
     tmpFileInfo = request.get_json()
@@ -412,7 +412,7 @@ def load_class():
         return jsonify({"error": "没有加载到有效的数据"}), 400
     return jsonify({"message": "班级数据加载成功", "data": data})
 
-@app.route('/mark_absent', methods=['POST'])
+@app.route('/api/mark_absent', methods=['POST'])
 def mark_absent_students():
     data=load_data(global_filename)#global_process_file
     print('processing:'+global_filename)
@@ -440,7 +440,7 @@ def mark_absent_students():
     save_data(global_filename, data)  # 假设数据保存到 data.json'''
     return jsonify({"message": "缺席学生已标记"})
     
-@app.route('/generate_pk', methods=['POST'])
+@app.route('/api/generate_pk', methods=['POST'])
 def generate_pk():
     try:
 
@@ -481,7 +481,7 @@ def generate_pk():
     except Exception as e:  
         return jsonify({"error": str(e)}), 500
 
-@app.route('/download_pkResult',methods=['GET']) #unused
+@app.route('/api/download_pkResult',methods=['GET']) #unused
 def downloadPkResult():
     with open(global_pkResult_name,'rb')as f:
         data=f.read()
@@ -500,7 +500,7 @@ def downloadPkResult():
 #########################
 # 班级管理：重置学生状态
 #########################
-@app.route('/reset_students', methods=['POST'])
+@app.route('/api/reset_students', methods=['POST'])
 def reset_students():
     filename =global_filename
     data = load_data(filename)
@@ -520,7 +520,7 @@ def reset_students():
 #########################
 # 班级管理：查询学生状态
 #########################
-@app.route('/query_student_status', methods=['POST'])
+@app.route('/api/query_student_status', methods=['POST'])
 def query_student_status_route():
     group_number = request.json.get('group_number')
     data = load_data(global_filename)  
@@ -548,7 +548,7 @@ def query_student_status_route():
 #########################
 # 班级管理：添加学生
 #########################
-@app.route('/addNewGuys',methods=['POST'])
+@app.route('/api/addNewGuys',methods=['POST'])
 def addNewStd():
    # GetData=request.json()
     nameToAdd=request.json.get('name')
