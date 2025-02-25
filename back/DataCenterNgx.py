@@ -15,7 +15,7 @@ global_pkResult_path=os.getcwd()
 global_supervised_num=0
 global_totalGroupNums=0
 
-
+global_maxAbsentTimes=-1 #DEBUG 返回前端的学生状态查询状态不对
 
 
 #设置全局变量
@@ -26,8 +26,11 @@ global_totalGroupNums=0
 
 app=Flask(__name__)
 
-CORS(app, origins=['http://class'])  #指定前端地址以允许数据传递
-CORS(app, origins=['http://192.168.1.238'])
+# CORS(app, origins=['http://class:8002'])  #指定前端地址以允许数据传递
+# CORS(app, origins=['http://192.168.1.179:5173'])
+# CORS(app,origins=['http://localhost:5173'])
+# CORS(app, origins=['http://192.168.1.239:8002'])#wyz ip
+CORS(app)
 
 #CORS(app, resources=r'/*') 
 
@@ -36,7 +39,7 @@ CORS(app, origins=['http://192.168.1.238'])
 # 接收文件的变量filenameAC
 #########################
 
-@app.route('/app/endpoint',methods=['POST'])
+@app.route('/api/app/endpoint',methods=['POST'])
 def api_endpoint():
     
     combined_data = request.json  
@@ -198,7 +201,7 @@ def save_data(filename, data):
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
-def update_students(data):
+def update_students(data):  #当所有学生都参与过比赛时直接重新开始
     for group_id, students in data.items():
         all_program_false = all(not student["program"] for student in students)
         if all_program_false:
@@ -209,9 +212,14 @@ def update_students(data):
         if all_shoot_false:
             for student in students:
                 student["shoot"] = True
-
+        #将所有的学生缺席重置为已到
+        # DEBUG
+    #for group_id, students in data.items():
         for student in students:
             student['absent'] = False
+    with open(global_filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+    #return data
 
 #########################
 # 班级管理：标记缺席
@@ -235,6 +243,8 @@ def mark_absent(data, names_to_mark):
             # 由于已经找到了学生并进行了修改，跳出外层循环 
         else:  
             print(f"警告: 名字 '{name}' 不在学生名单中。")
+    with open(global_filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)        
               
             
 '''def mark_absent(data, names_to_mark):
@@ -249,6 +259,9 @@ def mark_absent(data, names_to_mark):
                         student['absent times'] += 1
         else:
             print(f"警告: 名字 '{name}' 不在学生名单中。")'''
+# 
+# 
+# 未调用
 def write_absent_students_to_file(data, pk_num, class_number):
     current_date = datetime.now().strftime("%Y-%m-%d")
     filename = f"{class_number}_absent.txt"
@@ -287,7 +300,12 @@ def select_programmers(data):
             eligible_members = [member for member in group if not member['absent']]
             if eligible_members:
                 max_absent_times = max(member.get('absent times', 0) for member in eligible_members)
+
+                # set global max absent times at hear
                 candidates = [member for member in eligible_members if member.get('absent times', 0) == max_absent_times]
+                # global global_maxAbsentTimes
+                # global_maxAbsentTimes=max_absent_times
+
                 selected = random.choice(candidates)
             else:
                 if all_eligible_members:
@@ -378,7 +396,7 @@ def backup_data(filename, data, pk_num, class_number):
         print(f"备份文件保存失败: {e}")
 
 
-@app.route('/find_files',methods=['GET'])
+@app.route('/api/find_files',methods=['GET'])
 def find_files():
     json_files =[f for f in os.listdir() if f.endswith('.json')]
     if not json_files:
@@ -388,7 +406,7 @@ def find_files():
         return jsonify(json_files)
 
 
-@app.route('/load_class', methods=['POST'])
+@app.route('/api/load_class', methods=['POST'])
 def load_class():
     
     tmpFileInfo = request.get_json()
@@ -409,7 +427,7 @@ def load_class():
         return jsonify({"error": "没有加载到有效的数据"}), 400
     return jsonify({"message": "班级数据加载成功", "data": data})
 
-@app.route('/mark_absent', methods=['POST'])
+@app.route('/api/mark_absent', methods=['POST'])
 def mark_absent_students():
     data=load_data(global_filename)#global_process_file
     print('processing:'+global_filename)
@@ -437,10 +455,9 @@ def mark_absent_students():
     save_data(global_filename, data)  # 假设数据保存到 data.json'''
     return jsonify({"message": "缺席学生已标记"})
     
-@app.route('/generate_pk', methods=['POST'])
+@app.route('/api/generate_pk', methods=['POST'])
 def generate_pk():
     try:
-
         class_number = request.json.get('class_number')
         pk_num = request.json.get('pk_num')
         if not class_number:
@@ -453,32 +470,34 @@ def generate_pk():
             return jsonify({"error": "没有加载到有效的数据"}),
         backup_data(filename, data, pk_num, class_number)
 
-        update_students(data)
-
         #names_to_mark = request.json.get('names_to_mark', [])
         #mark_absent(data, names_to_mark)
         #save_data(filename, data)
         with open(global_filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
-        for group in data.values():
+        '''for group in data.values():
             for student in group:
-                student['absent'] = False
+                student['absent'] = False'''
         selected_students = select_programmers(data)
         selected_photographers = select_photographers(data, selected_students)
 
+        #data=update_students(data)
+        update_students(data)
         # 保存更新后的数据
         #save_data(filename, data)
         with open(global_filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
+        #将结果写入txt
         write_results_to_file(selected_students, selected_photographers, pk_num, class_number) #生成结果以及发送给前端 
         data=load_data(global_filename)
         print(global_pkResult_name)
+ 
         return jsonify({"message": "小组 PK 生成完成","filename":f"{global_pkResult_name}"})
     except Exception as e:  
         return jsonify({"error": str(e)}), 500
 
-@app.route('/download_pkResult',methods=['GET']) #unused
+@app.route('/api/download_pkResult',methods=['GET']) #unused
 def downloadPkResult():
     with open(global_pkResult_name,'rb')as f:
         data=f.read()
@@ -495,9 +514,9 @@ def downloadPkResult():
 
 
 #########################
-# 班级管理：重置学生状态
+# 班级管理：重置学生状态  *未启用
 #########################
-@app.route('/reset_students', methods=['POST'])
+@app.route('/api/reset_students', methods=['POST'])
 def reset_students():
     filename =global_filename
     data = load_data(filename)
@@ -517,7 +536,7 @@ def reset_students():
 #########################
 # 班级管理：查询学生状态
 #########################
-@app.route('/query_student_status', methods=['POST'])
+@app.route('/api/query_student_status', methods=['POST'])
 def query_student_status_route():
     group_number = request.json.get('group_number')
     data = load_data(global_filename)  
@@ -532,6 +551,14 @@ def query_student_status_route():
         name = student['name']
         program_status = "可以比赛" if student['program'] else "不可比赛"
         shoot_status = "可以监督" if student['shoot'] else "不可监督"
+
+        #DEBUGing :前端返回的可参赛和监督状态异常，查看选择学生部分
+        if student["absent"]:
+            program_status = "不可比赛"
+            shoot_status = "不可监督"
+
+        #DEBUGing
+
         absent_times = student['absent times']#.get('absent times', 0)
         status_list.append({
             "name": name,
@@ -545,7 +572,7 @@ def query_student_status_route():
 #########################
 # 班级管理：添加学生
 #########################
-@app.route('/addNewGuys',methods=['POST'])
+@app.route('/api/addNewGuys',methods=['POST'])
 def addNewStd():
    # GetData=request.json()
     nameToAdd=request.json.get('name')
@@ -620,5 +647,5 @@ def addNewStd():
 
     
 if __name__=='__main__':
-    #app.run(debug=True)
-    app.run(debug=True,host='0.0.0.0',port=5000)
+    app.run(debug=True)
+    #app.run(debug=True,host='0.0.0.0',port=5000)
