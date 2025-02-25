@@ -4,7 +4,6 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      previewStdInfo:[],
       //ip:'http://192.168.1.238:5000',
       files: [],
       selectedFile: '',//要加载的班级名称
@@ -48,6 +47,8 @@ export default {
         .catch(error => {
           console.log('获取文件列表失败')
         });
+
+
     },
     loadClass() {
       if (this.selectedFile === '')
@@ -224,19 +225,19 @@ export default {
 
 </script>
 <template>
-  <h2>读取已储存在服务的学生信息</h2>
-  <button ref="run" class="excelBox" @click="fetchFiles">读取存档</button>
+  <h2>读取用户已储存在服务的班级</h2>
+  <button ref="run" class="excelBox" @click="fetchFiles" style="height:50px;width: 70px;">读取</button>
   <br>
   <div class="class-management-section">
-    <h1><strong>班级管理系统</strong></h1>
+    <!-- <h1><strong>班级管理系统</strong></h1> -->
     <div>
       <h2>加载班级数据</h2>
       <!--input type="text" id="filename" placeholder="输入班级文件名 (如 data.json)"-->
       <select if="file-selector" v-model="selectedFile">
         <option v-for="file in files" :key="file">{{ file }}</option>
       </select>
-      <h5>调试*current files list:{{ files }}</h5>
-      <h5>已选择:{{ selectedFile }}</h5>
+      <h4>当前选择班级：{{ selectedFile }}</h4>
+      <h5>*files list:{{ files }}</h5>
       <button @click="loadClass">加载班级</button>
     </div>
     <br>
