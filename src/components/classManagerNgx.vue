@@ -52,7 +52,8 @@ export default {
       else {
         axios.post(`api/load_class`, { filename: this.selectedFile })
           .then(response => {
-            console.log(response.data)
+            //console.log(response.data)
+            this.$refs.previewSection.innerHTML="";
             this.stdPreview = `<ul>`;
             let indextmp=0;
             response.data.forEach(student => {
@@ -179,18 +180,18 @@ export default {
         }
       })
         .then(response => {
-          /*this.resultHtml = `<h3>学生状态</h3><ul>`;
+          this.resultHtml = `<h3>学生状态</h3><ul>`;
           response.data.forEach(student => {
             this.resultHtml += `<li>${student.name}: ${student.program_status}, ${student.shoot_status}, 缺席次数: ${student.absent_times}</li>`;
           });
           this.resultHtml += '</ul>';
-          this.$refs.resultContainer.innerHTML = this.resultHtml;*/
+          this.$refs.resultContainer.innerHTML = this.resultHtml;
           
-          response.data.forEach(student => {
+          /*response.data.forEach(student => {
             this.resultHtml += `${student.name}: ${student.program_status}, ${student.shoot_status}, 缺席次数: ${student.absent_times}`;
           });
     
-          this.$refs.resultContainer.innerHTML = this.resultHtml;
+          this.$refs.resultContainer.innerHTML = this.resultHtml;*/
         })
         .catch(error => {
           alert(error.response.data.error);
@@ -281,11 +282,11 @@ export default {
       <button @click="addStudent">添加</button>
     </div>
     <br>
-    <!-- <div>
+    <div>
       <h2>*调试*重置学生状态</h2>
       <input type="text" id="reset-filename" placeholder="输入班级文件名 (如 data.json)">
       <button @click="resetStudents">重置状态</button>
-    </div> -->
+    </div>
   </div>
 
 
