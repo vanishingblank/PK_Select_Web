@@ -425,8 +425,33 @@ def load_class():
         pass'''
     if not data:
         return jsonify({"error": "没有加载到有效的数据"}), 400
+    else:#返回预览信息
+        status_list = []
+        for tmpIndex in data:
+            students=data[tmpIndex]
+            for student in students:
+                name = student['name']
+                program_status = "可以比赛" if student['program'] else "不可比赛"
+                shoot_status = "可以监督" if student['shoot'] else "不可监督"
+
+                #DEBUGing :前端返回的可参赛和监督状态异常，查看选择学生部分
+                if student["absent"]:
+                    program_status = "不可比赛"
+                    shoot_status = "不可监督"
+
+                #DEBUGing
+                absent_times = student['absent times']#.get('absent times', 0)
+                status_list.append({
+                    "name": name,
+                    "program_status": program_status,
+                    "shoot_status": shoot_status,
+                    "absent_times": absent_times
+                })
+            print(status_list)
+        return jsonify(status_list)
     return jsonify({"message": "班级数据加载成功", "data": data})
 
+    
 @app.route('/api/mark_absent', methods=['POST'])
 def mark_absent_students():
     data=load_data(global_filename)#global_process_file
