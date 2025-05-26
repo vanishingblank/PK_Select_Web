@@ -4,10 +4,10 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      //ip:'http://192.168.1.238:5000',
       files: [],
       selectedFile: '',//要加载的班级名称
       filename: '',  //发送到后端的文件名变量
+      stdPreview: [],//prewiew the students
 
       absentNames: '',  //缺席学生
 
@@ -33,22 +33,18 @@ export default {
       addedToGroupNum: '',  //分配到的组别
       addedStdID: '',//新生学号
 
-      //ip:'http://192.168.1.239:5000'
-
     };
   },
   methods: {
     fetchFiles() {
       axios.get(`api/find_files`)
-      //axios.get(`${this.ip}/find_files`)
+        //axios.get(`${this.ip}/find_files`)
         .then(response => {
           this.files = response.data;
         })
         .catch(error => {
           console.log('获取文件列表失败')
         });
-
-
     },
     loadClass() {
       if (this.selectedFile === '')
@@ -56,7 +52,15 @@ export default {
       else {
         axios.post(`api/load_class`, { filename: this.selectedFile })
           .then(response => {
-            alert(response.data.message);
+            console.log(response.data)
+            this.stdPreview = `<ul>`;
+            let indextmp=0;
+            response.data.forEach(student => {
+              this.stdPreview += `<li>${++indextmp}: ${student.name}: ${student.program_status}, ${student.shoot_status}, 缺席次数: ${student.absent_times}</li>`;
+            });
+            this.stdPreview += '</ul>';
+            //this.$refs.resultContainer.innerHTML = this.stdPreview;
+            this.$refs.previewSection.innerHTML += this.stdPreview;
           })
           .catch(error => {
             alert(error.response.data.error);
@@ -175,11 +179,17 @@ export default {
         }
       })
         .then(response => {
-          this.resultHtml = `<h3>学生状态</h3><ul>`;
+          /*this.resultHtml = `<h3>学生状态</h3><ul>`;
           response.data.forEach(student => {
             this.resultHtml += `<li>${student.name}: ${student.program_status}, ${student.shoot_status}, 缺席次数: ${student.absent_times}</li>`;
           });
           this.resultHtml += '</ul>';
+          this.$refs.resultContainer.innerHTML = this.resultHtml;*/
+          
+          response.data.forEach(student => {
+            this.resultHtml += `${student.name}: ${student.program_status}, ${student.shoot_status}, 缺席次数: ${student.absent_times}`;
+          });
+    
           this.$refs.resultContainer.innerHTML = this.resultHtml;
         })
         .catch(error => {
@@ -187,7 +197,7 @@ export default {
         });
     },
     addStudent() {
-      if (this.addedStdName === '' && this.addedStdID === ''&&this.addedToGroupNum==='')
+      if (this.addedStdName === '' && this.addedStdID === '' && this.addedToGroupNum === '')
         alert("请输入有效学生信息")
       else {
         axios.post(`api/addNewGuys`, { name: this.addedStdName, toGroup: this.addedToGroupNum, stdID: this.addedStdID }, {
@@ -208,7 +218,7 @@ export default {
     }
   },
   mounted() {
-    //this.fetchFiles();
+    this.fetchFiles();
     //this.loadClass();
     // 可以在这里执行任何需要在组件挂载后运行的代码  
   },
@@ -225,9 +235,10 @@ export default {
 
 </script>
 <template>
-  <h2>读取用户已储存在服务的班级</h2>
+<div class="win">
+  <!-- <h2>读取用户已储存在服务的班级</h2>
   <button ref="run" class="excelBox" @click="fetchFiles" style="height:50px;width: 70px;">读取</button>
-  <br>
+  <br> -->
   <div class="class-management-section">
     <!-- <h1><strong>班级管理系统</strong></h1> -->
     <div>
@@ -270,15 +281,19 @@ export default {
       <button @click="addStudent">添加</button>
     </div>
     <br>
-    <div>
+    <!-- <div>
       <h2>*调试*重置学生状态</h2>
       <input type="text" id="reset-filename" placeholder="输入班级文件名 (如 data.json)">
       <button @click="resetStudents">重置状态</button>
-    </div>
+    </div> -->
   </div>
 
 
-  <div id="result"></div>
+  <div class="previewSection" id="previewSection" ref="previewSection">
+  <div class="title" style="text-align: center;">班级预览</div>
+   
+  </div>
+</div>
 </template>
 <style>
 /* 分隔线样式 */
@@ -289,7 +304,18 @@ export default {
   border-bottom: 1px solid #ccc;
   margin-bottom: 20px;
 }
-
+.win{
+  display: flex;
+}
+.previewSection{
+  padding: 20px;
+  background-color: #f9f9f9;
+  /* 稍浅的背景色，但保持柔和 */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
 /* 班级管理系统板块的样式 */
 .class-management-section {
   padding: 20px;
