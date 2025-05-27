@@ -1,4 +1,0 @@
-pip install flask-cors
-pip install flask
-random
-datetime
